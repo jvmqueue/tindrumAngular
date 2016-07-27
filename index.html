@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="styles/main.css" />    
+    <title>CNN Exam</title>
+</head>
+<body>
+    <div id="container" ng-app="tdApp" class="containerMain container-fluid">        
+        <div class="pagination-centered">
+        <section class="headerTop row gray">
+            <div class="col-xs-3"><lable>Users:</lable><span id="numberCountTiger" class="numberCount">&#160;</span></div>
+            <div class="col-xs-3"><lable>Photo Albums:</lable><span id="numberCountMonkey" class="numberCount">&#160;</span></div>
+            <div class="col-xs-3"><lable>Items in Album:</lable><span id="numberCountSnake" class="numberCount">&#160;</span></div>
+            <div class="col-xs-3"><lable>Album Photo List:</lable><span id="numberCountSnake" class="numberCount">&#160;</span></div>
+        </section>    
+        <section ng-controller="tdCtrl" class="row">
+            <div id="user" class="col-xs-3">
+                <li ng-repeat="user in users" ng-click="getAlbums(user.id)">{{user.name}}</li>
+            </div>
+            <div id="thumbnailPhotoAlbums" class="col-xs-3">
+                <li ng-repeat="album in albums">
+                    <div class="border">
+                        <img class="" src="{{thumbnailUrls[0] ? thumbnailUrls[0] : ''}}" width="63" height="63" alt="" />
+                        <p class="">{{album.title}}</p>                                            
+                    </div>
+                </li>
+            </div>
+            <div id="itemsInPhotoAlbum" class="col-xs-3">Thumbnails for Items in Photo Album</div>
+            <div id="albumInPhotoList" class="col-xs-3">Album in Photo List</div>
+        </section> <!-- End .row -->
+        </div> <!-- End div.pagination-centered -->
+    </div>
+    <script data-main="scripts/config" type="text/javascript" src="node_modules/requirejs/require.js"></script>     
+</body>
+</html>

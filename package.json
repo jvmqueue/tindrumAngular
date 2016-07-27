@@ -1,0 +1,47 @@
+{
+  "name": "TinDrum",
+  "matchdep": "~0.1.2",
+  "version": "1.0.0",
+  "description": "Angular",
+  "main": "scripts/config.js",
+  "scripts": {
+    "test": "main.gruntTest()"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jvmqueue/tinDrumExamAngular"
+  },
+  "keywords": [
+    "json",
+    "convert",
+    "angular"
+  ],
+  "author": "glenn",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-csslint": "^0.3.1",
+    "grunt-contrib-cssmin": "^0.11.0",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-clean": "^0.6.0"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jvmqueue/tinDrumExamAngular/issues"
+  },
+  "homepage": "http://jvmQueue.com/",
+  "jshint": {
+    "options": {
+      "jshintrc": ".jshintrc"
+    },
+    "all": [
+      "scripts/*.js"
+    ]
+  },
+  "dependencies": {
+    "angular": "^1.5.8",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.0",
+    "requirejs": "^2.2.0"
+  }
+}
