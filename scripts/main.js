@@ -2,48 +2,63 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
     var w = window, d = document;
     var tdApp = angular.module('tdApp', []);
     tdApp.controller('tdCtrl', function($scope, $http){
-        $scope.firstName = 'Harow';
 
-        $http({
-            method:'GET',
-            url:'http://jsonplaceholder.typicode.com/users',
-        }).then(function(paramResponse){ // promise
-            $scope.users = paramResponse.data;
-        });
-
-        $scope.getAlbums = function(paramUserId){
-            var strUserId = paramUserId;
-            $http({
-                method:'GET',
-                url:'http://jsonplaceholder.typicode.com/albums?userId=' + strUserId,
-            }).then(function(paramResponse){ // promise
-                $scope.albums = paramResponse.data;
-                $scope.albumIds = [];
-                $scope.photos = null;
-                var data = paramResponse.data;
-                data.forEach(function(item){
-                    $scope.albumIds.push(item.id);
-                });
-
+        var _fnc = {
+            httpGet:function(paramDirectory, paramQuery, paramCallBack){
+                var strDir = paramDirectory;
+                var strQuery = ( !!paramQuery ? '?' + paramQuery : '' );
                 $http({
                     method:'GET',
-                    url:'http://jsonplaceholder.typicode.com/photos',
+                    async:false,
+                    url:'http://jsonplaceholder.typicode.com/' + strDir + strQuery,
                 }).then(function(paramResponse){ // promise
-                    $scope.photos = paramResponse.data;
-                    $scope.thumbnailUrls = [];
-                    $scope.photos.forEach(function(item){
-                           for(var i = 0, len = $scope.albumIds.length; i < len; i++){
-                            if($scope.albumIds[i] == item.id){
-                                $scope.thumbnailUrls.push(item.thumbnailUrl);
-                            }
-                           }
-                    }); // End $scope.photos.forEach
-                    
+                    paramCallBack.call(this, paramResponse.data);
                 });                
+            }
 
-                
+
+        }; // End _fnc
+
+        var mArryAlbumIds = [];
+        var setAlbumIds = function(paramData){
+            var jsonAlbums =  paramData;
+            var arryAlbumIds = [];
+            jsonAlbums.forEach(function(item, index){
+                arryAlbumIds.push(item.id);
             });
+            getPhotos(arryAlbumIds);      
+        };        
+        var setUsers = function(paramData){
+            $scope.users =  paramData;
+        };
+        var setAlbums = function(paramData){
+            var jsonAlbums = paramData;
+            $scope.albums =  jsonAlbums;
+            setAlbumIds(jsonAlbums);
+        };
+        var setPhotos = function(paramData){
+             var jsonPhotos = paramData;
+             $scope.thumbnailUrls = [];
+             jsonPhotos.forEach(function(item, index){
+               for(var i = 0, len = mArryAlbumIds.length; i < len; i++){
+                if(mArryAlbumIds[i] == item.id){
+                    $scope.thumbnailUrls.push(item.thumbnailUrl);
+                }
+               }                
+             });
+        };        
+        var getPhotos = function(paramAlbumIds){
+            mArryAlbumIds =  paramAlbumIds;
+            _fnc.httpGet('photos', '', setPhotos);
+        };                
 
+        _fnc.httpGet('users', '', setUsers);
+
+
+        $scope.getAlbums = function(paramUserId){
+            var strUserId = paramUserId
+            var strQuery = 'userId=' + paramUserId;
+            _fnc.httpGet('albums', strQuery, setAlbums);
         }; // End $scope.getAlbums
 
 
