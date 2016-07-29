@@ -16,7 +16,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
                     async:false,
                     url:'http://jsonplaceholder.typicode.com/' + strDir + strQuery,
                 }).then(function(paramResponse){ // promise
-                    paramCallBack.call(this, paramResponse.data, context);
+                    paramCallBack.call(context, paramResponse.data);
                 });                
             }
 
@@ -32,37 +32,60 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
         Albums.prototype = {
             constructor:Albums,
             setAlbumIds:function(){
-                var jsonAlbums =  this.jsonAlbums;
                 var that = this;
-                that.arryAlbumIds = []; // reset
-                jsonAlbums.forEach(function(item, index){ 
-                    that.arryAlbumIds.push(item.id);
-                });
-
-                that.getPhotos.call(that, that.arryAlbumIds);      
+                that.arryAlbumIds = []; // reset                
+                var jsonAlbums = null;
+                var interval = w.setInterval(function(){ 
+                    if(typeof that.jsonAlbums != 'undefined'){
+                        jsonAlbums =  that.jsonAlbums;
+                        w.clearInterval(interval);
+                        jsonAlbums.forEach(function(item, index){ 
+                            that.arryAlbumIds.push(item.id);
+                        });
+                    }                    
+                }, 333);
+                
             },
-            setAlbums:function(paramData, paramContext){
-                var that = paramContext;
+            setAlbums:function(paramData){
+                var that = this;
                 var jsonAlbums = paramData;
                 that.jsonAlbums = jsonAlbums;
                 $scope.albums =  that.jsonAlbums; 
-                that.setAlbumIds.call(that); // allows us to maintain context
+
+
             },
             getPhotos:function(paramAlbumIds){
                 mArryAlbumIds =  paramAlbumIds;
                 var that = this;
-                _fnc.httpGet('photos', '', that.setPhotos, that);
+                
             },
-            setPhotos:function(paramData){
-                 var jsonPhotos = paramData;             
-                 $scope.thumbnailUrls = [];
-                 jsonPhotos.forEach(function(item, index){  
-                   for(var i = 0, len = mArryAlbumIds.length; i < len; i++){
-                    if(mArryAlbumIds[i] == item.id){
-                        $scope.thumbnailUrls.push(item.thumbnailUrl);
+            setPhotos:function(){
+                var jsonPhotos = null;
+                var that = this;
+                var arryAlbumIds = that.arryAlbumIds;        
+                var strQuery = null;
+                var intCounter = 0;
+
+                var fncStorePhoto = function(paramData){
+                    var strFirstAlbumThumbnailUrl = paramData[0].thumbnailUrl;
+                       $scope.albums[intCounter++]['thumbnailUrl'] = strFirstAlbumThumbnailUrl;
+                };
+
+                var interval = w.setInterval(function(){
+                if(that.arryAlbumIds.length > 0){ // wait for http response
+                    w.clearInterval(interval);
+
+                    for(var i = 0, len = that.arryAlbumIds.length; i < len; i++){
+                        strQuery =  '?albumId=' + that.arryAlbumIds[i];
+                           _fnc.httpGet('photos', strQuery, fncStorePhoto, that);
                     }
-                   }                
-                 });
+                       
+                }
+                }, 333); // End interval
+
+
+                 
+
             }   
         };
 
@@ -73,6 +96,9 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             var that = objAlbums;
             var strQuery =  '?userId=' + that.strUserId;
             _fnc.httpGet('albums', strQuery, objAlbums.setAlbums, that);
+            that.setAlbumIds.call(that); // allows us to maintain context
+            that.setPhotos.call(that); // allows us to maintain context
+
         };
 
         var setUsers = function(paramData){
