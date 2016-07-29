@@ -55,9 +55,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
 
             },
             getPhotos:function(paramAlbumIds){
-                mArryAlbumIds =  paramAlbumIds;
-                var that = this;
-                
+                var that = this;                
             },
             setPhotos:function(){
                 var jsonPhotos = null;
@@ -87,9 +85,16 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
                  
 
             }   
-        };
+        }; // End Albums.prototype
 
-        var mArryAlbumIds = [];
+
+        
+        Albums.setUsers = (function(){           
+            var fncStoreUsers = function(paramData){
+                $scope.users =  paramData;
+            };
+            _fnc.httpGet('users', '', fncStoreUsers);            
+        })();
 
         var workOnAlbums = function(paramObjAlbum){
             var objAlbums = paramObjAlbum;
@@ -99,13 +104,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             that.setAlbumIds.call(that); // allows us to maintain context
             that.setPhotos.call(that); // allows us to maintain context
 
-        };
-
-        var setUsers = function(paramData){
-            $scope.users =  paramData;
-        };                       
-
-        _fnc.httpGet('users', '', setUsers);
+        };             
 
 
         $scope.getAlbums = function(paramUserId){
