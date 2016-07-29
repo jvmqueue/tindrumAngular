@@ -17,13 +17,18 @@
         </section>    
         <section ng-controller="tdCtrl" class="row">
             <div id="user" class="col-xs-3">
-                <li ng-repeat="user in users" ng-click="getAlbums(user.id)">{{user.name}}</li>
+                <li 
+                    class="{{key % 2 == 0 ? 'evenRow' : 'oddRow'}}"
+                    ng-repeat="(key, value) in users" 
+                    ng-click="getAlbums(value.id)">
+                    {{value.name}}
+                </li>
             </div>
             <div id="thumbnailPhotoAlbums" class="col-xs-3">
-                <li ng-repeat="album in albums">
+                <li ng-repeat="(key, value) in albums" class="{{key % 2 == 0 ? 'evenRow' : 'oddRow'}}">
                     <div class="border">
-                        <img class="" src="{{album.thumbnailUrl ? album.thumbnailUrl : ''}}" width="63" height="63" alt="" />
-                        <p class="">{{album.title}}</p>                                            
+                        <img class="" src="{{value.thumbnailUrl ? value.thumbnailUrl : ''}}" width="63" height="63" alt="" />
+                        <p class="">{{value.title}}</p>                                            
                     </div>
                 </li>
             </div>
