@@ -22,7 +22,7 @@
             <div id="thumbnailPhotoAlbums" class="col-xs-3">
                 <li ng-repeat="album in albums">
                     <div class="border">
-                        <img class="" src="{{thumbnailUrls[0] ? thumbnailUrls[0] : ''}}" width="63" height="63" alt="" />
+                        <img class="" src="{{album.thumbnailUrl ? album.thumbnailUrl : ''}}" width="63" height="63" alt="" />
                         <p class="">{{album.title}}</p>                                            
                     </div>
                 </li>
