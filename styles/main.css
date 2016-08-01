@@ -8,6 +8,11 @@
 .evenRow{
     background-color:#CEC2C2;
  }
+ .override.thumbnail{
+    display:inline-block;
+    width:63px;
+    height:63px;
+ }
 .floatRight{
     float:right;
 }
