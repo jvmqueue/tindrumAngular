@@ -44,11 +44,19 @@
                     <span ng-repeat="(key, value) in photoUrls"
                         class="override thumbnail" 
                         style="background-image:url({{value.url ? value.url : ''}})"
+                        ng-click="onClickShowAlbumInPlay(value)"
                     >    
                     </span>
                 </li>                
             </div>
-            <div id="albumInPhotoList" class="col-xs-3">Album in Photo List</div>
+            <div id="albumInPhotoList" class="col-xs-3">
+                <div 
+                class="{{!!showAlbumInPlay ? 'show' : 'hide'}} override thumbnail"
+                style="background-image:url({{albumInPlayUrl ? albumInPlayUrl : ''}})" 
+                id="modelAlbumInPlay">
+                    {{albumInPlayTitle}}
+                </div>
+            </div>
         </section> <!-- End .row -->
         </div> <!-- End div.pagination-centered -->
     </div>
