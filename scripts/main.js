@@ -138,19 +138,19 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
 
 
         $scope.onClickGetAlbums = function(paramUserId){
-            var strUserId = paramUserId;
-            Albums.albums = new Albums(strUserId);
-            render({obj:Albums.albums, callee:'onClickGetAlbums', id:strUserId});
+            var strIdUser = paramUserId;
+            Albums.albums = new Albums(strIdUser);
+            render({obj:Albums.albums, callee:'onClickGetAlbums', id:strIdUser});
         }; // End $scope.onClickGetAlbums
 
         $scope.onClickGetPhotos = function(paramAlbumId){
-            var strAlbumId = paramAlbumId;
-            render({obj:Albums.albums, callee:'onClickGetPhotos', id:strAlbumId});
+            var strIdAlbum= paramAlbumId;
+            render({obj:Albums.albums, callee:'onClickGetPhotos', id:strIdAlbum});
         }; // End $scope.onClickGetPhotos
         $scope.onClickShowAlbumInPlay = function(paramObjPhoto){
             var objPhotos = paramObjPhoto;
-            var strId = objPhotos.id;
-            render({obj:objPhotos, callee:'onClickShowAlbumInPlay', id:strId});
+            var strIdAlbumSelectedPlay = objPhotos.id;
+            render({obj:objPhotos, callee:'onClickShowAlbumInPlay', id:strIdAlbumSelectedPlay});
         }; // End $scope.onClickShowAlbumInPlay        
 
 
