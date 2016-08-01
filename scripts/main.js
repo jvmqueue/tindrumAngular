@@ -132,7 +132,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
 
         $scope.onClickGetAlbums = function(paramUserId){
             var strUserId = paramUserId;
-            Albums.albums = new Albums(paramUserId);
+            Albums.albums = new Albums(strUserId);
             render({obj:Albums.albums, callee:'onClickGetAlbums', id:strUserId});
         }; // End $scope.onClickGetAlbums
 
@@ -140,6 +140,14 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             var strAlbumId = paramAlbumId;
             render({obj:Albums.albums, callee:'onClickGetPhotos', id:strAlbumId});
         }; // End $scope.onClickGetPhotos
+        $scope.onClickShowAlbumInPlay = function(paramObjPhoto){
+            var obj = paramObjPhoto;
+            var strUrl = obj.url;
+            var strTitle = obj.title;
+            $scope.showAlbumInPlay = 'show';
+            $scope.albumInPlayUrl = strUrl;
+            $scope.albumInPlayTitle = strTitle;
+        }; // End $scope.onClickShowAlbumInPlay        
 
 
     }); // End tdApp.controller
