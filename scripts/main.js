@@ -106,7 +106,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
 
             switch(options.callee){
                 case 'onClickGetAlbums':
-                    var strQuery =  '?userId=' + that.strUserId;
+                    var strQuery =  '?userId=' + strId;
                     _fnc.httpGet('albums', strQuery, objAlbums.setAlbums, that);
                     that.setAlbumIds.call(that); // allows us to maintain context
                     that.setPhotos.call(that); // allows us to maintain context
@@ -131,8 +131,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
 
 
         $scope.onClickGetAlbums = function(paramUserId){
-            var strUserId = paramUserId
-            var strQuery = 'userId=' + paramUserId;
+            var strUserId = paramUserId;
             Albums.albums = new Albums(paramUserId);
             render({obj:Albums.albums, callee:'onClickGetAlbums', id:strUserId});
         }; // End $scope.onClickGetAlbums
