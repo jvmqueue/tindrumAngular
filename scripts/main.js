@@ -53,12 +53,6 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
                 that.jsonAlbums = jsonAlbums;
                 $scope.albums =  that.jsonAlbums; 
             },
-            getPhotos:function(paramAlbumIds){
-                var that = this;                
-                console.group('ALBUM GET PHOTOS');
-                    console.log('that:\t', that);
-                   console.groupEnd(); 
-            },
             setPhotos:function(){
                 var jsonPhotos = null;
                 var that = this;
@@ -155,9 +149,6 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             render({obj:objPhotos, callee:'onClickShowAlbumInPlay', id:strIdAlbumSelectedPlay});
         }; // End $scope.onClickShowAlbumInPlay        
         $scope.onClickCloseModal = function(){
-            console.group('ON CLICK CLOSE MODAL');
-                console.log(':\t', 'Reached');
-               console.groupEnd(); 
             $scope.blnViewModalInView = !$scope.blnViewModalInView;
         }; // End $scope.onClickCloseModal
 
