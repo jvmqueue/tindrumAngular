@@ -100,14 +100,14 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
         })();
 
         var render = function(options){
-            var objAlbums = options.obj;
-            var that = objAlbums;
+            var obj = options.obj;
+            var that = obj;
             var strId = options.id;
 
             switch(options.callee){
                 case 'onClickGetAlbums':
                     var strQuery =  '?userId=' + strId;
-                    _fnc.httpGet('albums', strQuery, objAlbums.setAlbums, that);
+                    _fnc.httpGet('albums', strQuery, obj.setAlbums, that);
                     that.setAlbumIds.call(that); // allows us to maintain context
                     that.setPhotos.call(that); // allows us to maintain context
                     break;
@@ -123,6 +123,13 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
 
                     var strQuery =  '?albumId=' + strAlbumId;
                     _fnc.httpGet('photos', strQuery, fncGetPhotosForAlbum, that);                             
+                    break;
+                case 'onClickShowAlbumInPlay':
+                    var strUrl = obj.url;
+                    var strTitle = obj.title;
+                    $scope.showAlbumInPlay = 'show';
+                    $scope.albumInPlayUrl = strUrl;
+                    $scope.albumInPlayTitle = strTitle;
                     break;
                 default:
                     //  TODO: throw exception
@@ -141,12 +148,9 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             render({obj:Albums.albums, callee:'onClickGetPhotos', id:strAlbumId});
         }; // End $scope.onClickGetPhotos
         $scope.onClickShowAlbumInPlay = function(paramObjPhoto){
-            var obj = paramObjPhoto;
-            var strUrl = obj.url;
-            var strTitle = obj.title;
-            $scope.showAlbumInPlay = 'show';
-            $scope.albumInPlayUrl = strUrl;
-            $scope.albumInPlayTitle = strTitle;
+            var objPhotos = paramObjPhoto;
+            var strId = objPhotos.id;
+            render({obj:objPhotos, callee:'onClickShowAlbumInPlay', id:strId});
         }; // End $scope.onClickShowAlbumInPlay        
 
 
