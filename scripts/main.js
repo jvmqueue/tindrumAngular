@@ -27,6 +27,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             this.strUserId = paramUserId;
             this.jsonAlbums = null;
             this.arryAlbumIds = [];
+            this.arryPhotoIds = [];
             this.toString = function(){ return 'Albums'; };
         }; // End Albums
         Albums.prototype = {
@@ -51,11 +52,12 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
                 var jsonAlbums = paramData;
                 that.jsonAlbums = jsonAlbums;
                 $scope.albums =  that.jsonAlbums; 
-
-
             },
             getPhotos:function(paramAlbumIds){
                 var that = this;                
+                console.group('ALBUM GET PHOTOS');
+                    console.log('that:\t', that);
+                   console.groupEnd(); 
             },
             setPhotos:function(){
                 var jsonPhotos = null;
@@ -63,37 +65,38 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
                 var arryAlbumIds = that.arryAlbumIds;        
                 var strQuery = null;
                 var intCounter = 0;
+                that.arryPhotoIds = []; // clear photo array                
 
                 var fncStorePhoto = function(paramData){
                     var strFirstAlbumThumbnailUrl = paramData[0].thumbnailUrl;
-                       $scope.albums[intCounter++]['thumbnailUrl'] = strFirstAlbumThumbnailUrl;
+                    var strFirstAlbumId = paramData[0].albumId;
+                    that.arryPhotoIds.push(paramData.url);
+                    $scope.albums[intCounter]['thumbnailUrl'] = strFirstAlbumThumbnailUrl;
+                    $scope.albums[intCounter]['albumId'] = strFirstAlbumId;
+                    intCounter++;
                 };
 
                 var interval = w.setInterval(function(){
-                if(that.arryAlbumIds.length > 0){ // wait for http response
-                    w.clearInterval(interval);
+                    if(that.arryAlbumIds.length > 0){ // wait for http response
+                        w.clearInterval(interval);
 
-                    for(var i = 0, len = that.arryAlbumIds.length; i < len; i++){
-                        strQuery =  '?albumId=' + that.arryAlbumIds[i];
-                           _fnc.httpGet('photos', strQuery, fncStorePhoto, that);
-                    }
-                       
-                }
+                        for(var i = 0, len = that.arryAlbumIds.length; i < len; i++){
+                            strQuery =  '?albumId=' + that.arryAlbumIds[i];
+                            _fnc.httpGet('photos', strQuery, fncStorePhoto, that);
+                        }                           
+                    } // End if
                 }, 333); // End interval
-
-
-                 
-
-            }   
+                    
+            } // End setPhotos   
         }; // End Albums.prototype
 
 
-        
-        Albums.setUsers = (function(){           
+        Albums.albums = null;
+        Albums.setUsers = (function(){ // IIFE Initialize page's first column
             var fncStoreUsers = function(paramData){
                 $scope.users =  paramData;
             };
-            _fnc.httpGet('users', '', fncStoreUsers);            
+            _fnc.httpGet('users', '', fncStoreUsers); // request with local callback
         })();
 
         var workOnAlbums = function(paramObjAlbum){
@@ -103,18 +106,31 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             _fnc.httpGet('albums', strQuery, objAlbums.setAlbums, that);
             that.setAlbumIds.call(that); // allows us to maintain context
             that.setPhotos.call(that); // allows us to maintain context
-
         };             
 
 
-        $scope.getAlbums = function(paramUserId){
+        $scope.onClickGetAlbums = function(paramUserId){
             var strUserId = paramUserId
             var strQuery = 'userId=' + paramUserId;
-            var albums = new Albums(paramUserId);
-            workOnAlbums(albums);
+            Albums.albums = new Albums(paramUserId);
+            workOnAlbums(Albums.albums);
+        }; // End $scope.onClickGetAlbums
+
+        $scope.onClickGetPhotos = function(paramAlbumId){
+            var strAlbumId = paramAlbumId;
+            $scope.photoUrls = []; // reset
+            var fncGetPhotosForAlbum = function(paramData){
+                var jsonPhotos = paramData;
+                for(key in jsonPhotos){
+                    $scope.photoUrls.push(jsonPhotos[key]);
+                }
+            };
+
+            var strQuery =  '?albumId=' + strAlbumId;
+            _fnc.httpGet('photos', strQuery, fncGetPhotosForAlbum, this);             
             
-            
-        }; // End $scope.getAlbums
+
+        }; // End $scope.onClickGetPhotos
 
 
     }); // End tdApp.controller
