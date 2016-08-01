@@ -25,6 +25,12 @@
 .clearLeft{
     clear:left;
 }
+.hide{
+    display:none;
+}
+.show{
+    display:block;
+}
 .clearAll{
     clear:both;
 }
