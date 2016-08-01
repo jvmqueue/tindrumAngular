@@ -103,6 +103,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             var obj = options.obj;
             var that = obj;
             var strId = options.id;
+            $scope.blnViewModalInView = false;
 
             switch(options.callee){
                 case 'onClickGetAlbums':
@@ -130,6 +131,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
                     $scope.showAlbumInPlay = 'show';
                     $scope.albumInPlayUrl = strUrl;
                     $scope.albumInPlayTitle = strTitle;
+                    $scope.blnViewModalInView = true;
                     break;
                 default:
                     //  TODO: throw exception
@@ -152,6 +154,12 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             var strIdAlbumSelectedPlay = objPhotos.id;
             render({obj:objPhotos, callee:'onClickShowAlbumInPlay', id:strIdAlbumSelectedPlay});
         }; // End $scope.onClickShowAlbumInPlay        
+        $scope.onClickCloseModal = function(){
+            console.group('ON CLICK CLOSE MODAL');
+                console.log(':\t', 'Reached');
+               console.groupEnd(); 
+            $scope.blnViewModalInView = !$scope.blnViewModalInView;
+        }; // End $scope.onClickCloseModal
 
 
     }); // End tdApp.controller
