@@ -13,6 +13,13 @@
     width:63px;
     height:63px;
  }
+ .override.headerTop{
+    margin:0 0;
+    width:98.15%;    
+ }
+ .centerText{
+    text-align:center;
+ }
 .floatRight{
     float:right;
 }
