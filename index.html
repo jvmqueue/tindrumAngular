@@ -18,21 +18,36 @@
         <section ng-controller="tdCtrl" class="row">
             <div id="user" class="col-xs-3">
                 <li 
-                    class="{{key % 2 == 0 ? 'evenRow' : 'oddRow'}}"
                     ng-repeat="(key, value) in users" 
-                    ng-click="getAlbums(value.id)">
+                    ng-click="onClickGetAlbums(value.id)"
+                    class="{{key % 2 == 0 ? 'evenRow' : 'oddRow'}}"                    
+                    >
                     {{value.name}}
                 </li>
             </div>
             <div id="thumbnailPhotoAlbums" class="col-xs-3">
                 <li ng-repeat="(key, value) in albums" class="{{key % 2 == 0 ? 'evenRow' : 'oddRow'}}">
                     <div class="border">
-                        <img class="" src="{{value.thumbnailUrl ? value.thumbnailUrl : ''}}" width="63" height="63" alt="" />
-                        <p class="">{{value.title}}</p>                                            
+                        <span 
+                            class="override thumbnail" 
+                            style="background-image:url({{value.thumbnailUrl ? value.thumbnailUrl : ''}})"
+                            ng-click="onClickGetPhotos(value.albumId)"
+                            >    
+                            </span>
+                        <p class="">{{value.title}}</p>                       
+                        <p class="">{{value.albumId}}</p>                       
                     </div>
                 </li>
             </div>
-            <div id="itemsInPhotoAlbum" class="col-xs-3">Thumbnails for Items in Photo Album</div>
+            <div id="itemsInPhotoAlbum" class="col-xs-3">
+                <li> 
+                    <span ng-repeat="(key, value) in photoUrls"
+                        class="override thumbnail" 
+                        style="background-image:url({{value.url ? value.url : ''}})"
+                    >    
+                    </span>
+                </li>                
+            </div>
             <div id="albumInPhotoList" class="col-xs-3">Album in Photo List</div>
         </section> <!-- End .row -->
         </div> <!-- End div.pagination-centered -->
