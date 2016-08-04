@@ -8,6 +8,11 @@
 </head>
 <body>
     <div id="container" ng-app="tdApp" class="containerMain container-fluid">        
+        <div class="row">
+            <div class="col-xs-12">
+                <p style="text-align:center;">Open Instructions Button</p>
+            </div>
+        </div>
         <div class="pagination-centered">
         <section class="override headerTop centerText row gray">
             <div class="col-xs-4"><lable>Users:</lable><span id="numberCountTiger" class="numberCount">&#160;</span></div>
@@ -79,7 +84,45 @@
                   </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
 
-
+                <!-- Begin Instructions -->
+                <div
+                    id="modelInstructions" 
+                    class="modal {{!blnViewModalInstructions ? 'show' : 'hide'}}"
+                >
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button 
+                                ng-click="onClickCloseInstructions()"
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Instructions</h4>
+                          </div> <!-- End .modal-header -->
+                          <div 
+                            class="modal-body">
+                            <p class="instructions">
+                                <span>Created a web application that allows for displaying photo albums for multiple users using the data located at the /users, /photos, and /albums APIs located at </span>
+                                <a target="_blank" href="http://jsonplaceholder.typicode.com">http://jsonplaceholder.typicode.com</a>
+                                <ol type="1" class="orderedList">
+                                    <li>The application should display a list of users</li>
+                                    <li>Selecting a user should display a list of photo albums for that user</li>
+                                    <li>The list of albums should show a thumbnail of the album, which is just the first photo's thumbnail.</li>
+                                    <li>Clicking on an album should show the entire list of photos in the album, using each photo's thumbnail.</li>
+                                    <li>Clicking on a photo should show the full size photo with the photo's title as a caption.</li>
+                                    <li>The application should support asynchronous pagination of albums and photos. </li>
+                                </ol>
+                                <aside>Posted on github: 
+                                <a target="_blank" href="https://github.com/jvmqueue/tindrumAngular">https://github.com/jvmqueue/tindrumAngular</a>
+                            </p> <!-- End .Instructions -->
+                          </div>                          
+                        </div>
+                    </div> <!-- End .modal-dialog -->
+                </div>                
+                <!-- End instructions -->
 
         </section> <!-- End .row -->
         </div> <!-- End div.pagination-centered -->
