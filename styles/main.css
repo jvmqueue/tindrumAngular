@@ -25,6 +25,13 @@ li{
     list-style-type:decimal;    
     cursor:none;
 }
+.openInstructions{
+    color:#2377C1;
+    cursor:pointer;
+}
+.openInstructions:hover{
+    text-decoration:underline;
+}
 .floatRight{
     float:right;
 }
