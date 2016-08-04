@@ -1,4 +1,4 @@
-.row li{
+li{
     list-style-type:none;
     cursor:pointer;
 }
@@ -20,6 +20,11 @@
  .centerText{
     text-align:center;
  }
+ 
+ .row .orderedList li{
+    list-style-type:decimal;    
+    cursor:none;
+}
 .floatRight{
     float:right;
 }
