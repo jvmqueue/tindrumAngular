@@ -4,7 +4,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
     tdApp.controller('tdCtrl', function($scope, $http){
 
         var _fnc = {
-            httpGet:function(paramDirectory, paramQuery, paramCallBack, paramThat){
+            httpGet:function(paramDirectory, paramQuery, paramCallBack, paramThat){ // decorator
                 var strDir = paramDirectory;
                 var strQuery = ( !!paramQuery === true ? paramQuery : '' );
                 var context = null;
@@ -37,14 +37,14 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
                 that.arryAlbumIds = []; // reset                
                 var jsonAlbums = null;
                 var interval = w.setInterval(function(){ 
-                    if(typeof that.jsonAlbums != 'undefined'){
+                    if(typeof that.jsonAlbums != null){
                         jsonAlbums =  that.jsonAlbums;
                         w.clearInterval(interval);
                         jsonAlbums.forEach(function(item, index){ 
                             that.arryAlbumIds.push(item.id);
                         });
                     }                    
-                }, 333);
+                }, 1111);
                 
             },
             setAlbums:function(paramData){
@@ -93,11 +93,11 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
             _fnc.httpGet('users', '', fncStoreUsers); // request with local callback
         })();
 
-        var render = function(options){
+        var update = function(options){
             var obj = options.obj;
             var that = obj;
             var strId = options.id;
-            $scope.blnViewModalInView = false;
+            $scope.blnViewModalInView = false; // closed modal when user clicks any control, a reset
 
             switch(options.callee){
                 case 'onClickGetAlbums':
@@ -136,21 +136,24 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
         $scope.onClickGetAlbums = function(paramUserId){
             var strIdUser = paramUserId;
             Albums.albums = new Albums(strIdUser);
-            render({obj:Albums.albums, callee:'onClickGetAlbums', id:strIdUser});
+            update({obj:Albums.albums, callee:'onClickGetAlbums', id:strIdUser});
         }; // End $scope.onClickGetAlbums
 
         $scope.onClickGetPhotos = function(paramAlbumId){
             var strIdAlbum= paramAlbumId;
-            render({obj:Albums.albums, callee:'onClickGetPhotos', id:strIdAlbum});
+            update({obj:Albums.albums, callee:'onClickGetPhotos', id:strIdAlbum});
         }; // End $scope.onClickGetPhotos
         $scope.onClickShowAlbumInPlay = function(paramObjPhoto){
             var objPhotos = paramObjPhoto;
             var strIdAlbumSelectedPlay = objPhotos.id;
-            render({obj:objPhotos, callee:'onClickShowAlbumInPlay', id:strIdAlbumSelectedPlay});
+            update({obj:objPhotos, callee:'onClickShowAlbumInPlay', id:strIdAlbumSelectedPlay});
         }; // End $scope.onClickShowAlbumInPlay        
-        $scope.onClickCloseModal = function(){
+        $scope.onClickCloseModal = function(){ // simply opens and closed the modal
             $scope.blnViewModalInView = !$scope.blnViewModalInView;
         }; // End $scope.onClickCloseModal
+        $scope.onClickCloseInstructions = function(){ // simply opens and closed the modal
+            $scope.blnViewModalInstructions = !$scope.blnViewModalInstructions;
+        }; // End $scope.onClickCloseInstructions        
 
 
     }); // End tdApp.controller
