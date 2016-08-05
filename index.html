@@ -9,8 +9,8 @@
 <body>
     <div id="container" ng-app="tdApp" ng-controller="tdCtrl" class="containerMain container-fluid">        
         <div class="row">
-            <div class="col-xs-12">
-                <p class="openInstructions" ng-click="onClickCloseInstructions()" style="text-align:center;">Open Instructions Button</p>
+            <div class="col-xs-12 txtAlignCenter">
+                <p class="openInstructions btn btn-primary" ng-click="onClickCloseInstructions()">Open Instructions</p>
             </div>
         </div>
         <div class="pagination-centered">
@@ -20,15 +20,20 @@
             <div class="col-xs-4"><lable>Items in Album:</lable><span id="numberCountSnake" class="numberCount">&#160;</span></div>
         </section>    
         <section class="row">
-            <div id="user" class="col-xs-4">
-                <li 
-                    ng-repeat="(key, value) in users" 
-                    ng-click="onClickGetAlbums(value.id)"
-                    class="{{key % 2 == 0 ? 'evenRow' : 'oddRow'}}"                    
-                    >
-                    {{value.name}}
-                </li>
-            </div>
+            <form id="user" class="col-xs-4" onsubmit="return void(0);">
+                <fieldset>
+                    <input
+                        ng-repeat="(key, value) in users" 
+                        ng-click="onClickGetAlbums(value.id)"
+                        class="{{key % 2 == 0 ? 'evenRow' : 'oddRow'}} form-control override txtAlignLeft btn btn-primary"
+                        type="button"
+                        for="user"
+                        value="{{value.name}}"
+                        >
+                        
+                    </input>                    
+                </fieldset>
+            </form>
             <div id="thumbnailPhotoAlbums" class="col-xs-4">
                 <li ng-repeat="(key, value) in albums" class="{{key % 2 == 0 ? 'evenRow' : 'oddRow'}}">
                     <div class="border">
