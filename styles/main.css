@@ -20,15 +20,21 @@ input[type="button"]{
 .txtAlignCenter{
    text-align:center;    
 }
+.borderRadius{
+    border-radius:4px;
+}
 .oddRow{
     background-color:#F9EFEF;
 }
 .evenRow{
     background-color:#CEC2C2;
  }
- .oddRow:focus, .evenRow:focus{
+.oddRow:focus, .evenRow:focus{
     background-color:#e08282 !important;
     color:#FFFFFF;
+}
+.openInstructions{
+    margin:10px 0;
 }
 .openInstructions.btn.btn-primary{
     color:#FFFFFF;
