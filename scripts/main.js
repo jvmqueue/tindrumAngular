@@ -105,6 +105,7 @@ require(['jQuery', 'angular', 'http'], function($, ng, http){
                     _fnc.httpGet('albums', strQuery, obj.setAlbums, that);
                     that.setAlbumIds.call(that); // allows us to maintain context
                     that.setPhotos.call(that); // allows us to maintain context
+                    $scope.photoUrls = []; // visitor clicked on 1st column, clear 3rd column data
                     break;
                 case 'onClickGetPhotos':
                     var strAlbumId = strId;
