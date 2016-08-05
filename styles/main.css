@@ -2,16 +2,45 @@ li{
     list-style-type:none;
     cursor:pointer;
 }
+input[type="button"]{
+    display:block;
+}
+.override.btn{
+    color:#286090;
+}
+.override.btn:hover{
+    color:#FFFFFF;
+}
+.override.btn.txtAlignLeft{
+    text-align:left;
+}
+.txtAlignLeft{
+   text-align:left;
+}
+.txtAlignCenter{
+   text-align:center;    
+}
 .oddRow{
     background-color:#F9EFEF;
 }
 .evenRow{
     background-color:#CEC2C2;
  }
+ .oddRow:focus, .evenRow:focus{
+    background-color:#e08282 !important;
+    color:#FFFFFF;
+}
+.openInstructions.btn.btn-primary{
+    color:#FFFFFF;
+    text-decoration:none;
+}
  .override.thumbnail{
     display:inline-block;
     width:63px;
     height:63px;
+ }
+  .override.thumbnail:hover{
+    opacity:0.5;
  }
  .override.headerTop{
     margin:0 0;
@@ -54,7 +83,8 @@ li{
     clear:both;
 }
 .border{
-    border:1px solid #CCCCCC;
+    border:1px solid #2C74AA;
+    border-radius:4px;
 }
 
 /* Begin layout */
